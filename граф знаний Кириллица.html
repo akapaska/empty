@@ -1,0 +1,657 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Граф знаний: Кириллица + Оил Ресурс</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232735;
+    --border: #2e3345;
+    --text: #e2e4ea;
+    --text-muted: #8b8fa3;
+    --accent: #6c8cff;
+    --accent2: #a78bfa;
+    --green: #34d399;
+    --red: #f87171;
+    --orange: #fbbf24;
+    --cyan: #22d3ee;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: .5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    color: var(--text-muted);
+    font-size: .9rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+  }
+  h2 {
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin: 2.5rem 0 1rem;
+    padding-bottom: .5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  h3 {
+    font-size: 1.1rem;
+    color: var(--accent2);
+    margin: 1.5rem 0 .75rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: .75rem 0;
+    font-size: .88rem;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--accent);
+    text-align: left;
+    padding: .6rem .75rem;
+    border-bottom: 2px solid var(--border);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  td {
+    padding: .5rem .75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:hover td { background: rgba(108,140,255,.04); }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: .78rem;
+    font-weight: 600;
+    margin: 1px;
+  }
+  .tag-p0 { background: rgba(248,113,113,.15); color: var(--red); }
+  .tag-p1 { background: rgba(251,191,36,.15); color: var(--orange); }
+  .tag-p2 { background: rgba(139,143,163,.15); color: var(--text-muted); }
+  .tag-fix { background: rgba(52,211,153,.15); color: var(--green); }
+  .tag-flex { background: rgba(167,139,250,.15); color: var(--accent2); }
+  .tag-create { background: rgba(34,211,238,.15); color: var(--cyan); }
+  .tag-rework { background: rgba(251,191,36,.15); color: var(--orange); }
+  .tag-nav { background: rgba(108,140,255,.15); color: var(--accent); }
+  .tag-trans { background: rgba(52,211,153,.15); color: var(--green); }
+  .tag-info { background: rgba(167,139,250,.15); color: var(--accent2); }
+  .tag-a { background: rgba(248,113,113,.15); color: var(--red); }
+  .tag-b { background: rgba(251,191,36,.15); color: var(--orange); }
+  .tag-c { background: rgba(139,143,163,.15); color: var(--text-muted); }
+  pre {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: .82rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    margin: .75rem 0;
+  }
+  .metric-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: .75rem 0;
+  }
+  .metric {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: .75rem 1.25rem;
+    min-width: 150px;
+    flex: 1;
+  }
+  .metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .metric-label {
+    font-size: .78rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .status-ok { color: var(--green); }
+  .status-warn { color: var(--orange); }
+  .status-crit { color: var(--red); }
+  .status-none { color: var(--text-muted); }
+  ul { padding-left: 1.25rem; margin: .5rem 0; }
+  li { margin-bottom: .3rem; }
+  .summary-box {
+    background: linear-gradient(135deg, rgba(108,140,255,.08), rgba(167,139,250,.08));
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+    font-style: italic;
+    color: var(--text);
+  }
+  .graph-link {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .4rem 0;
+    font-size: .88rem;
+  }
+  .graph-link .arrow { color: var(--accent); font-weight: bold; }
+  .section-anchor { scroll-margin-top: 2rem; }
+
+  @media (max-width: 800px) {
+    body { padding: 1rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .metric-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<h1>ГРАФ ЗНАНИЙ: КИРИЛЛИЦА + ОИЛ РЕСУРС</h1>
+<div class="subtitle">
+  Дата: 31.03.2026 &nbsp;|&nbsp;
+  Источники: SEO-стратегия, аудиты, сметы, пропоузалы, транскрипция встречи 31.03.2026 &nbsp;|&nbsp;
+  Toimi.pro SEO Division
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s1" class="section-anchor">1. Бизнес-контекст</h2>
+
+<h3>1.1 Структура холдинга</h3>
+<pre>
+ГК &laquo;КИРИЛЛИЦА&raquo; (АО &laquo;Кириллица&raquo;)
+│   Выручка группы: 24,4 млрд &#8381; (2024)
+│   Чистая прибыль: 450 млн &#8381;
+│   Рейтинг НРА: BB||ru (стабильный)
+│   Основана: 2014  |  Юр.адрес: Калужская обл.  |  Офис: Москва
+│
+├── НЕФТЕГАЗ ─── ООО &laquo;Оил Ресурс&raquo;
+│   │   Выручка: 8,4 млрд &#8381; (2024, +67% г/г)
+│   │   Рейтинг НРА: BBB||ru
+│   │   Облигации: 50 млрд &#8381; (Мосбиржа), 4 выпуска
+│   │   14 НПЗ, 520 тыс. тонн, 3 офиса, 3 домена (.ru .com .cn)
+│   └── Технология МТТ (патенты)
+│
+├── АПК ─── земельный банк, растениеводство, зерноперевалка
+└── IT ──── патенты, цифровые продукты
+</pre>
+
+<h3>1.2 Команда на стороне клиента</h3>
+<div class="card">
+<table>
+  <tr><th>Роль</th><th>Кто</th><th>Примечание</th></tr>
+  <tr><td>CEO</td><td>Семён</td><td>Стратегические решения</td></tr>
+  <tr><td>Директор по маркетингу</td><td>Новый маркетолог</td><td>Недавно пришла</td></tr>
+  <tr><td>PR-менеджер</td><td>—</td><td>Отдельный менеджер</td></tr>
+  <tr><td>IR-специалист</td><td>Выходит через 2-3 нед.</td><td>Повлияет на стратегию по инвесторам</td></tr>
+  <tr><td>IT-отдел</td><td>Собственный</td><td>Доступы выдают медленно, через Git</td></tr>
+</table>
+</div>
+
+<h3>1.3 Команда Toimi</h3>
+<div class="card">
+<table>
+  <tr><th>Роль</th><th>Кто</th><th>Зона</th></tr>
+  <tr><td>Руководитель / стратег</td><td>Артём Довгопол</td><td>Стратегия, коммуникация с Семёном, бюджеты</td></tr>
+  <tr><td>SEO-лид</td><td>Алёна</td><td>Стратегия SEO, задачи (и на Toimi)</td></tr>
+  <tr><td>Аккаунт-менеджер</td><td>Оля</td><td>Детали клиента, отчётность. Также на Toimi</td></tr>
+  <tr><td>PM-менеджер</td><td>Полина</td><td>Управление задачами по сайту</td></tr>
+  <tr><td>Контент</td><td>Вика</td><td>Контент-менеджер</td></tr>
+  <tr><td>Разработчик (Битрикс)</td><td>Ширкевич</td><td>Основной исполнитель Fix. Компактные задачи + дедлайны. Требует чёткие дедлайны и ревью</td></tr>
+  <tr><td>Разработчик (валидатор)</td><td>Сайфудинов (Руслан)</td><td>WP-шник, опытнее и внимательнее. Валидатор кода. Осваивает Битрикс. На Toimi до 10 апр., на K/OR с ~13 апр.</td></tr>
+</table>
+</div>
+
+<div class="card" style="border-color: var(--orange);">
+<h3>Процесс работы с кодом</h3>
+<p><strong style="color:var(--orange);">&#9888; Ревнивый IT-отдел клиента (Пётр).</strong> Никаких сторонних библиотек, подозрительного кода.</p>
+<p style="margin-top:.5rem;"><strong>Цепочка контроля:</strong> Ширкевич делает &rarr; Сайфудинов ревьюит &rarr; Алёна валидирует через Claude Code (QA + пентестер) &rarr; в Dev.</p>
+<p style="margin-top:.5rem;"><strong>Деплой:</strong></p>
+<ol>
+<li>Василию: проверить место на сервере</li>
+<li>Бэкап через админку Битрикс &rarr; скачать &rarr; развернуть локально</li>
+<li>Все правки на локальной копии</li>
+<li>Перед заливкой: уведомить клиента</li>
+<li>Клиент обновляет контент <strong>вечером</strong> и <strong>до четверга обеда</strong></li>
+<li>Каждый раз свежая копия прода</li>
+<li>После заливки &mdash; удалить бэкап с сервера</li>
+</ol>
+</div>
+
+<h3>1.4 Коммерческая модель</h3>
+<div class="card-grid">
+  <div class="card">
+    <h3>kirillitsa.ru</h3>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-value">248,640 ₽</div><div class="metric-label">Разовые работы (с НДС)</div></div>
+      <div class="metric"><div class="metric-value">147,840 ₽</div><div class="metric-label">Ежемесячно</div></div>
+      <div class="metric"><div class="metric-value">47,040 ₽</div><div class="metric-label">Ежеквартально</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>oilresource.ru</h3>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-value">315,840 ₽</div><div class="metric-label">Разовые работы (с НДС)</div></div>
+      <div class="metric"><div class="metric-value">144,480 ₽</div><div class="metric-label">Ежемесячно</div></div>
+      <div class="metric"><div class="metric-value">47,040 ₽</div><div class="metric-label">Ежеквартально</div></div>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <table>
+    <tr><td>Тип контракта</td><td><span class="tag tag-fix">Fix</span> SEO в рамках сметы + <span class="tag tag-flex">Flex</span> T&amp;M доп. техработы</td></tr>
+    <tr><td>Ставка</td><td>3,200 ₽/час</td></tr>
+    <tr><td>Ссылочный бюджет</td><td>15,000–25,000 ₽/мес (каждый сайт)</td></tr>
+    <tr><td>Целевая отгрузка</td><td>5–6 млн ₽/мес (амбиция, с T&amp;M)</td></tr>
+    <tr><td>Отчётность</td><td>Раз в 1–2 недели, начиная с конца апреля</td></tr>
+    <tr><td>Проекты в трекере</td><td><code>SEO.oilresource.ru</code> и <code>SEO.kirillitsa.ru</code></td></tr>
+  </table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s2" class="section-anchor">2. Текущее состояние сайтов</h2>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>kirillitsa.ru</h3>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-value status-crit">≈0</div><div class="metric-label">Органика (Semrush)</div></div>
+      <div class="metric"><div class="metric-value">1,426</div><div class="metric-label">Визиты Яндекс (3 мес)</div></div>
+      <div class="metric"><div class="metric-value">1,231</div><div class="metric-label">Визиты Google (3 мес)</div></div>
+    </div>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-value">1</div><div class="metric-label">Ключей в индексе</div></div>
+      <div class="metric"><div class="metric-value">499 / 116</div><div class="metric-label">Бэклинки / домены</div></div>
+      <div class="metric"><div class="metric-value">80%</div><div class="metric-label">Dofollow</div></div>
+    </div>
+    <p style="color:var(--text-muted); margin-top:.5rem;">&gt;95% трафика — брендовые запросы. Небрендовый = 0.</p>
+  </div>
+  <div class="card">
+    <h3>oilresource.ru</h3>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-value status-crit">3 /мес</div><div class="metric-label">Органика (Semrush)</div></div>
+      <div class="metric"><div class="metric-value">3,072</div><div class="metric-label">Визиты Яндекс (3 мес)</div></div>
+      <div class="metric"><div class="metric-value">1,919</div><div class="metric-label">Уникальных</div></div>
+    </div>
+    <div class="metric-row">
+      <div class="metric"><div class="metric-value">1</div><div class="metric-label">Ключей в индексе</div></div>
+      <div class="metric"><div class="metric-value">7,000 / 308</div><div class="metric-label">Бэклинки / домены</div></div>
+      <div class="metric"><div class="metric-value">96%</div><div class="metric-label">Dofollow</div></div>
+    </div>
+    <p style="color:var(--text-muted); margin-top:.5rem;">3 домена (.ru .com .cn). Продвигается только RU.</p>
+  </div>
+</div>
+
+<div class="summary-box">
+  Мощный бизнес (24,4 млрд ₽ выручки, облигации 50 млрд ₽, рейтинги, Forbes/РБК) при крайне слабом цифровом присутствии. Оба сайта — &laquo;визитки&raquo; без SEO. Небрендовый органический трафик = 0. Потенциал роста — кратный.
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s3" class="section-anchor">3. Архитектура сайтов</h2>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>kirillitsa.ru</h3>
+<pre>
+/ (главная) ─────── <span style="color:var(--orange)">ПЕРЕРАБОТАТЬ</span>
+  Ключи: гк кириллица (600-800)
+
+/about/ ─────────── <span style="color:var(--orange)">РЕРАЙТ</span>
+  Ключи: кириллица компания (400-600)
+
+/investors/ ─────── <span style="color:var(--orange)">РЕРАЙТ + FAQ</span>
+  └── /investors/bonds/ ── <span style="color:var(--cyan)">★ СОЗДАТЬ</span>
+      Ключи: облигации нефт.компаний (300-500)
+
+/branch/petroleum/ ─ <span style="color:var(--orange)">НАПОЛНИТЬ</span>
+/branch/agro/ ────── <span style="color:var(--orange)">НАПОЛНИТЬ</span>
+/branch/it/ ──────── <span style="color:var(--orange)">НАПОЛНИТЬ</span>
+
+/press-center/ ───── <span style="color:var(--orange)">Schema NewsArticle</span>
+/contacts/ ────────── <span style="color:var(--orange)">Карта + LocalBusiness</span>
+/blog/ ────────────── <span style="color:var(--cyan)">★ СОЗДАТЬ (М3+)</span>
+</pre>
+  </div>
+  <div class="card">
+    <h3>oilresource.ru</h3>
+<pre>
+/ (главная) ─────── <span style="color:var(--orange)">ПЕРЕРАБОТАТЬ</span>
+  <span style="color:var(--red)">⚠ Title = слоган</span>  <span style="color:var(--red)">⚠ Видео → 503</span>
+
+/about-company/ ──── <span style="color:var(--orange)">РЕРАЙТ + Person</span>
+
+/investors/ ────────── <span style="color:var(--cyan)">★ СОЗДАТЬ С НУЛЯ</span>
+  <span style="color:var(--red)">сейчас = редирект на главную!</span>
+  ├── /investors/bonds/ ── <span style="color:var(--cyan)">★ СОЗДАТЬ</span>
+  └── /investors/esg/ ──── <span style="color:var(--orange)">НАПОЛНИТЬ</span>
+
+/business-directions/
+  ├── /trading/ ────── <span style="color:var(--orange)">НАПОЛНИТЬ (2 карточки)</span>
+  └── /logistics/ ──── <span style="color:var(--orange)">НАПОЛНИТЬ</span>
+
+/products/ ─────────── <span style="color:var(--cyan)">★ СОЗДАТЬ 5 страниц</span>
+  /diesel/  /gasoline/  /fuel-oil/
+  /lpg/     /kerosene/
+  <span style="color:var(--accent2)">→ Каталог 1С (~июль, ~2 млн ₽)</span>
+
+/tech/mtt/ ─────────── <span style="color:var(--cyan)">★ СОЗДАТЬ</span>
+/press-center/ ─────── <span style="color:var(--orange)">NewsArticle (100+)</span>
+/contacts/ ─────────── <span style="color:var(--orange)">3 карты + LocalBusiness</span>
+[.com / .cn] ───────── <span style="color:var(--red)">hreflang ОТСУТСТВУЕТ</span>
+</pre>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s4" class="section-anchor">4. Критические проблемы</h2>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>kirillitsa.ru</h3>
+    <table>
+      <tr><th>#</th><th>Проблема</th><th>P</th></tr>
+      <tr><td>K1</td><td>Meta Description отсутствует на ВСЕХ страницах</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>K2</td><td>Alt-атрибуты пустые на ВСЕХ изображениях</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>K3</td><td>Опечатка &laquo;Нефтезаговая&raquo; вместо &laquo;Нефтегазовая&raquo;</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>K4</td><td>Schema.org полностью отсутствует</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>K5</td><td>Broken title в пресс-центре (незакрытая кавычка)</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>K6</td><td>H1 = слоганы без ключевых слов</td><td><span class="tag tag-p1">P1</span></td></tr>
+      <tr><td>K7</td><td>Контент на главной = 1–2 предложения</td><td><span class="tag tag-p1">P1</span></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>oilresource.ru</h3>
+    <table>
+      <tr><th>#</th><th>Проблема</th><th>P</th></tr>
+      <tr><td>O1</td><td>/investors/ не существует (редирект)</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O2</td><td>Title главной = слоган без бренда/ключей</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O3</td><td>/business-directions/ почти пуста</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O4</td><td>Schema.org полностью отсутствует</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O5</td><td>hreflang отсутствует (.ru/.com/.cn)</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O6</td><td>Canonical-теги отсутствуют</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O7</td><td>Sitemap: все URL на HTTP</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O8</td><td>Sitemap: мусор (/404, /auth, /search)</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O9</td><td>Sitemap: сломанный URL %20sales/</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O10</td><td>Alt пустые (22/23 на главной)</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O11</td><td>Видео на главной &rarr; 503</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O12</td><td>Cookie-баннер отсутствует (152-ФЗ)</td><td><span class="tag tag-p0">P0</span></td></tr>
+      <tr><td>O13</td><td>Опечатка &laquo;Горячия линия&raquo;</td><td><span class="tag tag-p1">P1</span></td></tr>
+      <tr><td>O14</td><td>82% пустых анкоров в бэклинках</td><td><span class="tag tag-p1">P1</span></td></tr>
+      <tr><td>O15</td><td>Lazy loading не используется</td><td><span class="tag tag-p1">P1</span></td></tr>
+      <tr><td>O16</td><td>Security headers отсутствуют</td><td><span class="tag tag-p1">P1</span></td></tr>
+      <tr><td>O17</td><td>Google Analytics не установлен</td><td><span class="tag tag-p2">P2</span></td></tr>
+      <tr><td>O18</td><td>Нет формы на главной</td><td><span class="tag tag-p1">P1</span></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s5" class="section-anchor">5. Семантическое ядро</h2>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>kirillitsa.ru &mdash; 500–800 запросов</h3>
+    <table>
+      <tr><th>Приоритет</th><th>Кластер</th><th>Частотность</th><th>Интент</th></tr>
+      <tr><td><span class="tag tag-a">A (M1-2)</span></td><td>Брендовые</td><td>1,300–1,900</td><td><span class="tag tag-nav">Навигац.</span></td></tr>
+      <tr><td><span class="tag tag-a">A (M1-2)</span></td><td>Облигации</td><td>530–900</td><td><span class="tag tag-trans">Транзакц.</span></td></tr>
+      <tr><td><span class="tag tag-b">B (M2-6)</span></td><td>Инвестиции</td><td>1,800–3,100</td><td><span class="tag tag-info">Инфо</span></td></tr>
+      <tr><td><span class="tag tag-b">B (M2-6)</span></td><td>Нефтегаз</td><td>700–1,400</td><td><span class="tag tag-info">Инфо</span></td></tr>
+      <tr><td><span class="tag tag-c">C (M6-12)</span></td><td>АПК + IT + МТТ</td><td>980–1,810</td><td><span class="tag tag-info">Инфо</span></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>oilresource.ru &mdash; 300–500 запросов (.ru)</h3>
+    <table>
+      <tr><th>Приоритет</th><th>Кластер</th><th>Частотность</th><th>Интент</th></tr>
+      <tr><td><span class="tag tag-a">A (M1-2)</span></td><td>Брендовые</td><td>3,000–4,700</td><td><span class="tag tag-nav">Навигац.</span></td></tr>
+      <tr><td><span class="tag tag-a">A (M1-2)</span></td><td>Нефтепродукты опт</td><td>2,300–4,400</td><td><span class="tag tag-trans">Транзакц.</span></td></tr>
+      <tr><td><span class="tag tag-a">A (M1-2)</span></td><td>Облигации</td><td>600–1,100</td><td><span class="tag tag-trans">Транзакц.</span></td></tr>
+      <tr><td><span class="tag tag-b">B (M2-6)</span></td><td>Продуктовые</td><td>400–900</td><td><span class="tag tag-trans">Транзакц.</span></td></tr>
+      <tr><td><span class="tag tag-b">B (M2-6)</span></td><td>Трейдинг/Логистика</td><td>700–1,500</td><td><span class="tag tag-info">Инфо</span></td></tr>
+      <tr><td><span class="tag tag-c">C (M6-12)</span></td><td>ESG + МТТ</td><td>80–260</td><td><span class="tag tag-info">Инфо</span></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s6" class="section-anchor">6. Граф связей</h2>
+
+<div class="card">
+<h3>Между сайтами</h3>
+<pre>
+KIRILLITSA.RU                         OILRESOURCE.RU
+─────────────                         ──────────────
+/branch/petroleum/  &lt;══════════════&gt;  / (главная)
+/investors/         &lt;══════════════&gt;  /investors/ <span style="color:var(--cyan)">★СОЗДАТЬ</span>
+/investors/bonds/   &lt;══════════════&gt;  /investors/bonds/ <span style="color:var(--cyan)">★СОЗДАТЬ</span>
+/about/             &lt;══════════════&gt;  /about-company/
+/press-center/      &lt;══════════════&gt;  /press-center/
+</pre>
+</div>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>kirillitsa.ru &mdash; внутренние связи</h3>
+<pre>
+           / (главная)
+          /     |     \
+     /about/ /investors/ /branch/
+                |         /  |  \
+         /bonds/★   petrol. agro it
+                      |
+                 oilresource.ru &rarr;
+
+  /press-center/ &harr; /blog/★ &harr; все кластеры
+</pre>
+  </div>
+  <div class="card">
+    <h3>oilresource.ru &mdash; внутренние связи</h3>
+<pre>
+            / (главная)
+          /      |       \
+  /about-co/ /investors/★  /business-dir/
+              /    \        /         \
+         /bonds/★ /esg/  /trading/  /logistics/
+                            |
+                  /diesel/ /gasoline/ ... /kerosene/
+                            |
+                     КАТАЛОГ 1С (июль)
+</pre>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s7" class="section-anchor">7. Матрица покрытия</h2>
+
+<div class="card" style="margin-bottom:1rem; display:flex; gap:2rem; flex-wrap:wrap; align-items:center; padding:.75rem 1.25rem;">
+  <span style="font-size:.85rem; color:var(--text-muted); font-weight:600;">Легенда:</span>
+  <span style="font-size:.85rem;"><span class="status-ok">&#10004;</span> &mdash; работает нормально</span>
+  <span style="font-size:.85rem;"><span class="status-warn">&#9888;</span> &mdash; существует, но требует переработки</span>
+  <span style="font-size:.85rem;"><span class="status-crit">&#10060;</span> &mdash; отсутствует полностью</span>
+  <span style="font-size:.85rem;"><strong class="status-crit">НЕТ</strong> &mdash; страницы не существует</span>
+  <span style="font-size:.85rem;"><span class="status-none">&mdash;</span> &mdash; неприменимо</span>
+</div>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>kirillitsa.ru</h3>
+    <table>
+      <tr><th>Кластер</th><th>Pillar</th><th>Контент</th><th>Schema</th><th>Meta</th><th>Alt</th><th>Blog</th></tr>
+      <tr><td>Главная</td><td class="status-warn">&#9888;</td><td>1-2 предл.</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-none">&mdash;</td></tr>
+      <tr><td>Инвесторы</td><td class="status-warn">&#9888;</td><td>слабый</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td></tr>
+      <tr><td>Нефтегаз</td><td class="status-warn">&#9888;</td><td>слабый</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td></tr>
+      <tr><td>АПК</td><td class="status-warn">&#9888;</td><td>слабый</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td></tr>
+      <tr><td>IT</td><td class="status-warn">&#9888;</td><td>слабый</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td></tr>
+      <tr><td>Пресс-центр</td><td class="status-ok">&#10004;</td><td>есть</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-none">&mdash;</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>oilresource.ru</h3>
+    <table>
+      <tr><th>Кластер</th><th>Pillar</th><th>Контент</th><th>Schema</th><th>Meta</th><th>Alt</th><th>Blog</th></tr>
+      <tr><td>Главная</td><td class="status-warn">&#9888;</td><td>слоган</td><td class="status-crit">&#10060;</td><td class="status-warn">частично</td><td class="status-crit">&#10060;</td><td class="status-none">&mdash;</td></tr>
+      <tr><td>Инвесторы</td><td class="status-crit">НЕТ</td><td>&mdash;</td><td class="status-crit">&#10060;</td><td>&mdash;</td><td>&mdash;</td><td class="status-crit">&#10060;</td></tr>
+      <tr><td>Трейдинг</td><td class="status-warn">&#9888;</td><td>2 карточки</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td></tr>
+      <tr><td>Продукты</td><td class="status-crit">НЕТ</td><td>&mdash;</td><td class="status-crit">&#10060;</td><td>&mdash;</td><td>&mdash;</td><td class="status-crit">&#10060;</td></tr>
+      <tr><td>Пресс-центр</td><td class="status-ok">&#10004;</td><td>100+</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-crit">&#10060;</td><td class="status-none">&mdash;</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s8" class="section-anchor">8. Ссылочный профиль</h2>
+
+<div class="card">
+<table>
+  <tr><th>Метрика</th><th>kirillitsa.ru</th><th>oilresource.ru</th></tr>
+  <tr><td>Бэклинков</td><td>499</td><td>7,000</td></tr>
+  <tr><td>Доменов</td><td>116</td><td>308</td></tr>
+  <tr><td>Dofollow</td><td>80%</td><td>96%</td></tr>
+  <tr><td>Топ-донор</td><td>sergeytereshkin.com (104)</td><td>oilresurs.ru (5,665!) <span class="status-crit">&#9888;</span></td></tr>
+  <tr><td>Пустые анкоры</td><td>~15%</td><td><strong class="status-crit">82%</strong></td></tr>
+  <tr><td>Коммерч. анкоры</td><td>&lt;5%</td><td>&lt;3%</td></tr>
+</table>
+<p style="color:var(--text-muted); margin-top:.75rem;"><strong>Цель:</strong> 30% брендовые, 20% URL, 15–20% коммерческие, 30% информационные</p>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s9" class="section-anchor">9. Дорожная карта</h2>
+
+<div class="card">
+<h3>Апрель 2026 &mdash; ТЕХНИЧКА (текущий фокус)</h3>
+<table>
+  <tr><th>Задача</th><th>Сайт</th><th>Тип</th></tr>
+  <tr><td>Meta Description для всех страниц</td><td>Оба</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>Alt-атрибуты для всех изображений</td><td>Оба</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>Исправить опечатки</td><td>Оба</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>Schema.org Organization</td><td>Оба</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>Schema.org NewsArticle на пресс-релизы</td><td>Оба</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>hreflang .ru/.com/.cn</td><td>OilResource</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>Исправить sitemap (HTTPS, мусор)</td><td>OilResource</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>Canonical-теги</td><td>Оба</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>Заменить Title главной</td><td>OilResource</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>Исправить broken title пресс-центра</td><td>Kirillitsa</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>robots.txt</td><td>OilResource</td><td><span class="tag tag-fix">Fix</span></td></tr>
+  <tr><td>Конвертировать в WebP</td><td>Оба</td><td><span class="tag tag-flex">Flex</span></td></tr>
+  <tr><td>Создать /investors/</td><td>OilResource</td><td><span class="tag tag-flex">Flex</span></td></tr>
+  <tr><td>Наполнить /business-directions/</td><td>OilResource</td><td><span class="tag tag-flex">Flex</span></td></tr>
+  <tr><td>Cookie-баннер (152-ФЗ)</td><td>OilResource</td><td><span class="tag tag-flex">Flex</span></td></tr>
+  <tr><td>Lazy loading</td><td>OilResource</td><td><span class="tag tag-flex">Flex</span></td></tr>
+  <tr><td>Исправить видео 503</td><td>OilResource</td><td><span class="tag tag-flex">Flex</span></td></tr>
+</table>
+</div>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>Май–Июнь 2026 &mdash; On-Page + Контент</h3>
+    <ul>
+      <li>Продуктовые страницы OilResource (5 шт.)</li>
+      <li>FAQ-блоки на инвесторских страницах</li>
+      <li>Начало линкбилдинга</li>
+      <li>IR-специалист выходит &rarr; корректировка</li>
+      <li>Блокирующий контракт &rarr; середина мая</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Июль+ 2026 &mdash; Масштабирование</h3>
+    <ul>
+      <li>Каталог продукции (1С) &mdash; ~2 млн ₽</li>
+      <li>Платформа брендов &mdash; ~7 млн ₽</li>
+      <li>Экспертный блог (4–6 статей/мес)</li>
+      <li>Яндекс.Новости (полноценно)</li>
+      <li>Международное SEO (.com/.cn)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+<h3>Целевые KPI (12 месяцев)</h3>
+<table>
+  <tr><th>KPI</th><th>Сейчас</th><th>3 мес</th><th>6 мес</th><th>12 мес</th></tr>
+  <tr><td>Органика kirillitsa</td><td class="status-crit">≈0</td><td>+50%</td><td>+200%</td><td class="status-ok">700–1,500/мес</td></tr>
+  <tr><td>Органика oilresource</td><td class="status-crit">3/мес</td><td>+100%</td><td>+400%</td><td class="status-ok">2,000–5,000/мес</td></tr>
+  <tr><td>Ключей Топ-10 (K)</td><td>0</td><td>3–5</td><td>10–15</td><td class="status-ok">15–25</td></tr>
+  <tr><td>Ключей Топ-10 (O)</td><td>1</td><td>5–8</td><td>12–18</td><td class="status-ok">20–30</td></tr>
+  <tr><td>Rich Snippets</td><td>0</td><td>5+</td><td>15+</td><td class="status-ok">Все ключевые</td></tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s10" class="section-anchor">10. Пробелы и возможности</h2>
+
+<div class="card-grid">
+  <div class="card">
+    <h3>Критические пробелы</h3>
+    <ul>
+      <li><span class="status-crit">&#9679;</span> Полное отсутствие Schema.org &rarr; 0 Rich Snippets</li>
+      <li><span class="status-crit">&#9679;</span> Нет Meta Description &rarr; &minus;30–40% CTR</li>
+      <li><span class="status-crit">&#9679;</span> /investors/ не существует на OR</li>
+      <li><span class="status-crit">&#9679;</span> hreflang не настроен &rarr; каннибализация</li>
+      <li><span class="status-crit">&#9679;</span> Sitemap на HTTP</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Стратегические возможности</h3>
+    <ul>
+      <li><span class="status-ok">&#9679;</span> 100+ пресс-релизов OR &rarr; Яндекс.Новости</li>
+      <li><span class="status-ok">&#9679;</span> Инвесторский трафик (глубина 5.2, отказы 12%)</li>
+      <li><span class="status-ok">&#9679;</span> Продуктовые стр. (дизель оптом = 1,000–2,000)</li>
+      <li><span class="status-ok">&#9679;</span> Каталог 1С (июль) &rarr; покрытие семантики</li>
+      <li><span class="status-ok">&#9679;</span> Английская версия .com &rarr; пик запросов</li>
+      <li><span class="status-ok">&#9679;</span> Платформа брендов &rarr; ~7 млн ₽ проект</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="s11" class="section-anchor">11. Ключевые решения (встреча 31.03.2026)</h2>
+
+<div class="card">
+<ol>
+  <li><strong>Фокус = зарабатывание денег.</strong> Каждая единица приносит доход.</li>
+  <li><strong>Toimi = органический рост.</strong> Прежний объём контента не нужен.</li>
+  <li><strong>Только российские проекты.</strong> Зарубежные пресейлы отказались.</li>
+  <li><strong>Апрель = техничка.</strong> Формировать задачи для разработчиков.</li>
+  <li><strong>Отчитываться раз в 1–2 недели</strong>, начиная с конца апреля.</li>
+  <li><strong>Рассмотреть SEO на 3 доменах</strong> (ru/com/cn) &mdash; &laquo;делать один раз, получать три раза&raquo;.</li>
+  <li><strong>Каталог продукции (1С)</strong> &mdash; июль, ~2 млн ₽.</li>
+  <li><strong>Платформа брендов</strong> &mdash; апрель+, ~7 млн ₽.</li>
+</ol>
+</div>
+
+</body>
+</html>

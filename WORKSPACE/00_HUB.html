@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUB — Кириллица + Оил Ресурс</title>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#232735;--border:#2e3345;--text:#e2e4ea;--muted:#8b8fa3;--accent:#6c8cff;--accent2:#a78bfa;--green:#34d399;--red:#f87171;--orange:#fbbf24;--cyan:#22d3ee}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:2rem;max-width:1200px;margin:0 auto}
+h1{font-size:1.8rem;margin-bottom:.25rem;background:linear-gradient(135deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{color:var(--muted);font-size:.85rem;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:.75rem}
+h2{font-size:1.2rem;color:var(--accent);margin:2rem 0 .75rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem;margin-bottom:1rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:border-color .2s}
+.card:hover{border-color:var(--accent)}
+.card h3{font-size:1rem;color:var(--accent2);margin-bottom:.5rem}
+.card a{color:var(--cyan);text-decoration:none;display:block;padding:.25rem 0;font-size:.9rem}
+.card a:hover{color:var(--accent);text-decoration:underline}
+.card .desc{color:var(--muted);font-size:.8rem;margin-left:1rem}
+.status{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.75rem;font-weight:600}
+.s-active{background:rgba(52,211,153,.15);color:var(--green)}
+.s-draft{background:rgba(251,191,36,.15);color:var(--orange)}
+.s-todo{background:rgba(139,143,163,.15);color:var(--muted)}
+.nextsteps{background:var(--surface);border:1px solid var(--green);border-radius:12px;padding:1.25rem;margin:1rem 0}
+.nextsteps h3{color:var(--green);margin-bottom:.5rem}
+.nextsteps ol{padding-left:1.25rem}
+.nextsteps li{margin-bottom:.3rem;font-size:.9rem}
+</style>
+</head>
+<body>
+
+<h1>HUB: Кириллица + Оил Ресурс</h1>
+<div class="subtitle">Единая точка входа | Обновлено: 01.04.2026</div>
+
+<div class="nextsteps">
+<h3>Next Steps (эта неделя)</h3>
+<ol>
+<li>Полина пингует Василия по месту на сервере и доступам к Битрикс</li>
+<li>Алёна готовит спецификации (Title, Description, Schema) &mdash; пока без доступов</li>
+<li>Согласовать с Артёмом план работ &rarr; отправить клиенту уведомление о старте</li>
+<li>С ~13 апреля разработчики начинают Fix-задачи</li>
+<li>Первый отчёт клиенту &mdash; конец апреля</li>
+</ol>
+</div>
+
+<h2>Стратегия и знания</h2>
+<div class="grid">
+<div class="card">
+<h3>Граф знаний</h3>
+<a href="../Knowledge_Graph_Kirillitsa_OilResource.html">Knowledge Graph (HTML)</a>
+<span class="desc">Бизнес-контекст, команда, проблемы, семантика, архитектура, связи</span>
+<a href="../Knowledge_Graph_Kirillitsa_OilResource.md">Knowledge Graph (MD)</a>
+</div>
+<div class="card">
+<h3>SEO-стратегия</h3>
+<a href="../SEO_Strategy_Execution_FINAL.html">Стратегия FINAL (HTML)</a>
+<span class="desc">12-месячный план, задачи по часам, KPI, milestones, бюджеты</span>
+<a href="../SEO_Strategy_Execution_FINAL.md">Стратегия FINAL (MD)</a>
+</div>
+</div>
+
+<h2>Задачи</h2>
+<div class="grid">
+<div class="card">
+<h3>kirillitsa.ru <span class="status s-active">Active</span></h3>
+<a href="TASKS_Kirillitsa.md">TASKS_Kirillitsa.md</a>
+<span class="desc">Все задачи с бейджами Fix/Flex, часами, статусами</span>
+</div>
+<div class="card">
+<h3>oilresource.ru <span class="status s-active">Active</span></h3>
+<a href="TASKS_OilResource.md">TASKS_OilResource.md</a>
+<span class="desc">Все задачи с бейджами Fix/Flex, часами, статусами</span>
+</div>
+</div>
+
+<h2>Спецификации для разработчиков</h2>
+<div class="grid">
+<div class="card">
+<h3>Title + Meta Description <span class="status s-draft">Черновик</span></h3>
+<a href="SPECS/title_description.md">SPECS/title_description.md</a>
+<span class="desc">Все страницы обоих сайтов. Copy-paste для разрабов.</span>
+</div>
+<div class="card">
+<h3>Schema.org Organization <span class="status s-draft">Черновик</span></h3>
+<a href="SPECS/schema_org.md">SPECS/schema_org.md</a>
+<span class="desc">JSON-LD для обоих сайтов. Готовый код.</span>
+</div>
+<div class="card">
+<h3>Canonical-теги <span class="status s-draft">Черновик</span></h3>
+<a href="SPECS/canonical.md">SPECS/canonical.md</a>
+<span class="desc">Правила + карта canonical URL для каждой страницы.</span>
+</div>
+<div class="card">
+<h3>Alt-атрибуты <span class="status s-draft">Черновик</span></h3>
+<a href="SPECS/alt_attributes.md">SPECS/alt_attributes.md</a>
+<span class="desc">Шаблон. Заполняется после прокликивания сайтов.</span>
+</div>
+<div class="card">
+<h3>hreflang (OilResource) <span class="status s-draft">Черновик</span></h3>
+<a href="SPECS/hreflang.md">SPECS/hreflang.md</a>
+<span class="desc">Связка 3 доменов: .ru / .com / .cn</span>
+</div>
+<div class="card">
+<h3>Schema.org NewsArticle <span class="status s-todo">TODO</span></h3>
+<span class="desc" style="color:var(--muted)">Будет создан на неделе 3</span>
+</div>
+</div>
+
+<h2>Метрики</h2>
+<div class="grid">
+<div class="card">
+<h3>Baseline (стартовые метрики) <span class="status s-active">Заполнен</span></h3>
+<a href="METRICS/baseline.md">METRICS/baseline.md</a>
+<span class="desc">Трафик, ключи, бэклинки, индексация — точка отсчёта.</span>
+</div>
+<div class="card">
+<h3>Трекер позиций <span class="status s-draft">Шаблон</span></h3>
+<a href="METRICS/positions.md">METRICS/positions.md</a>
+<span class="desc">Еженедельный трекинг позиций по целевым ключам.</span>
+</div>
+</div>
+
+<h2>Контент</h2>
+<div class="grid">
+<div class="card">
+<h3>kirillitsa.ru — очередь контента</h3>
+<a href="CONTENT/kirillitsa/README.md">CONTENT/kirillitsa/README.md</a>
+<span class="desc">10 единиц: рерайты, новые страницы, статьи для блога.</span>
+</div>
+<div class="card">
+<h3>oilresource.ru — очередь контента</h3>
+<a href="CONTENT/oilresource/README.md">CONTENT/oilresource/README.md</a>
+<span class="desc">15 единиц: рерайты, продуктовые, лендинги, статьи.</span>
+</div>
+</div>
+
+<h2>Отчёты клиенту</h2>
+<div class="grid">
+<div class="card">
+<h3>Апрель 2026 <span class="status s-todo">Ещё нет</span></h3>
+<a href="REPORTS/" style="color:var(--muted)">REPORTS/</a>
+<span class="desc">Первый отчёт &mdash; конец апреля</span>
+</div>
+</div>
+
+<h2>Исходные документы</h2>
+<div class="grid">
+<div class="card">
+<h3>Аудиты и сметы</h3>
+<a href="../seo_audit_kirillitsa.docx">Аудит kirillitsa.ru (docx)</a>
+<a href="../seo_audit_oilresource.docx">Аудит oilresource.ru (docx)</a>
+<a href="../Audit_Kirillitsa_new.xlsx - Оил Ресурс.csv">Аудит OilResource (CSV)</a>
+<a href="../SEO-Смета-kirillitsa.xlsx - Общая оценка.csv">Смета kirillitsa (CSV)</a>
+<a href="../SEO-Смета-OilResource.xlsx - Общая оценка.csv">Смета OilResource (CSV)</a>
+</div>
+<div class="card">
+<h3>Стратегия и предложения</h3>
+<a href="../SEO_Strategy_Kirillitsa_OilResource_2026.docx.md">SEO-стратегия (MD)</a>
+<a href="../SEO_Proposal_Kirillitsa.docx">Пропоузал kirillitsa (docx)</a>
+<a href="../SEO_Proposal_OilResource.docx">Пропоузал OilResource (docx)</a>
+<a href="../seo_plan.docx">SEO-план (docx)</a>
+</div>
+</div>
+
+</body>
+</html>

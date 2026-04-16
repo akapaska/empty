@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Title + Description: БЫЛО → СТАЛО</title>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#232735;--border:#2e3345;--text:#e2e4ea;--muted:#8b8fa3;--accent:#6c8cff;--accent2:#a78bfa;--green:#34d399;--red:#f87171;--orange:#fbbf24;--cyan:#22d3ee}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:2rem;max-width:1400px;margin:0 auto}
+h1{font-size:1.6rem;margin-bottom:.25rem;background:linear-gradient(135deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{color:var(--muted);font-size:.85rem;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:.75rem}
+h2{font-size:1.3rem;color:var(--accent);margin:2rem 0 1rem;padding-bottom:.4rem;border-bottom:2px solid var(--border)}
+.page-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.page-card h3{color:var(--cyan);font-size:1rem;margin-bottom:.75rem}
+.page-card.done{border-color:var(--green);opacity:.7}
+.page-card.done h3::after{content:' ✅ Сделано';color:var(--green);font-size:.8rem}
+.row{display:grid;grid-template-columns:100px 1fr 1fr;gap:.75rem;margin-bottom:.5rem;font-size:.88rem}
+.row-label{color:var(--accent2);font-weight:600;font-size:.82rem}
+.row-old{background:var(--surface2);border-radius:8px;padding:.5rem .75rem;color:var(--red);border:1px solid rgba(248,113,113,.15)}
+.row-new{background:var(--surface2);border-radius:8px;padding:.5rem .75rem;color:var(--green);border:1px solid rgba(52,211,153,.15);cursor:pointer;user-select:all}
+.row-new:hover{border-color:var(--green);background:rgba(52,211,153,.05)}
+.missing{color:var(--red);font-style:italic}
+.note{color:var(--muted);font-size:.8rem;margin-top:.25rem}
+@media(max-width:900px){.row{grid-template-columns:80px 1fr;}.row-old,.row-new{grid-column:2}}
+</style>
+</head>
+<body>
+
+<h1>Title + Description: БЫЛО → СТАЛО</h1>
+<div class="subtitle">Кликни на зелёное поле — текст выделится для копирования. Дата: 02.04.2026</div>
+
+<!-- ============================================================ -->
+<h2>kirillitsa.ru</h2>
+
+<div class="page-card done">
+<h3>/about/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">О Кириллице — Группа компаний «Кириллица»</div>
+  <div class="row-new">О компании — ГК Кириллица — Нефтегазовый инвестиционный холдинг</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">АО «Кириллица» — независимый инвестиционный холдинг. Нефтегаз, АПК, IT. Работаем с 2014 года. Чистая прибыль 450 млн ₽.</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">«Кириллица»</div>
+  <div class="row-new">ГК «Кириллица» — холдинг с фокусом на нефтегаз, АПК и технологии</div>
+</div>
+</div>
+
+<div class="page-card done">
+<h3>/ (главная)</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">Кириллица — инвестиции в будущее России — Группа компаний «Кириллица»</div>
+  <div class="row-new">ГК Кириллица — инвестиции в нефтегаз, АПК и IT — Облигации</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">ГК «Кириллица»: нефтегазовый холдинг, АПК, IT. Выручка 24,4 млрд ₽. Облигации на Мосбирже. Рейтинг BB||ru. → Узнать больше</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Общий вклад в лучшее будущее</div>
+  <div class="row-new">ГК «Кириллица» — инвестиции в нефтегаз, АПК и IT</div>
+</div>
+</div>
+
+<div class="page-card done">
+<h3>/investors/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">Инвесторам — Группа компаний «Кириллица»</div>
+  <div class="row-new">Инвесторам — Облигации ГК Кириллица — Доходность и рейтинги</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">Облигации АО «Кириллица» на Мосбирже. Кредитный рейтинг BB||ru. EBITDA, выручка, финансовая отчётность. Купить облигации →</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Инвесторам</div>
+  <div class="row-new">Облигации и инвестиции — ГК «Кириллица»</div>
+</div>
+</div>
+
+<div class="page-card done">
+<h3>/branch/petroleum/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">Нефтегазовая отрасль — Группа компаний «Кириллица»</div>
+  <div class="row-new">Нефтегазовая отрасль — ГК Кириллица — 520 тыс. тонн поставок</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">Оптовые поставки нефти и нефтепродуктов. 14 НПЗ-партнёров, 520 тыс. тонн/год. Выручка 21,5 млрд ₽. По всей России.</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Нефтегазовая отрасль</div>
+  <div class="row-new">Нефтегазовое направление ГК «Кириллица»</div>
+</div>
+</div>
+
+<div class="page-card">
+<h3>/branch/agro/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">Агропромышленная отрасль — Группа компаний «Кириллица»</div>
+  <div class="row-new">Агропромышленный комплекс — ГК Кириллица — Инвестиции в АПК</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">Инвестиции в сельское хозяйство и агропром. Земельный банк, растениеводство, зерноперевалка. Стратегия развития АПК.</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Агропромышленная отрасль + «Плодородие и процветание родной земли» (2 шт!)</div>
+  <div class="row-new">Инвестиции в агропромышленный комплекс</div>
+</div>
+</div>
+
+<div class="page-card">
+<h3>/branch/it/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">IT-отрасль — Группа компаний «Кириллица»</div>
+  <div class="row-new">IT-направление — ГК Кириллица — Технологические инвестиции</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">IT-инвестиции ГК «Кириллица»: патенты, технология МТТ, цифровые продукты. Инновации в нефтегазовой отрасли.</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">IT-отрасль + «Цифровая трансформация» (2 шт!)</div>
+  <div class="row-new">IT и технологии ГК «Кириллица»</div>
+</div>
+</div>
+
+<div class="page-card">
+<h3>/press-center/ ⚠️ broken title</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">Пресс-центр — Группа компаний «Кириллица <span style="color:var(--orange)">(незакрытая «)</span></div>
+  <div class="row-new">Пресс-центр ГК «Кириллица» — новости и публикации в СМИ</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">Последние новости ГК «Кириллица»: пресс-релизы, публикации в Forbes, РБК, Коммерсантъ. Облигации, финансы, проекты.</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Пресс-центр</div>
+  <div class="row-new">Новости группы компаний «Кириллица»</div>
+</div>
+</div>
+
+<div class="page-card">
+<h3>/contacts/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">Контакты АО «Кириллица» — Группа компаний «Кириллица»</div>
+  <div class="row-new">Контакты АО Кириллица — Москва — Телефон, адрес, реквизиты</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">Адрес: Москва. Телефон, email, реквизиты АО «Кириллица». Юридический адрес: Калужская обл. Схема проезда →</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Контакты</div>
+  <div class="row-new">Контакты ГК «Кириллица»</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<h2>oilresource.ru</h2>
+
+<div class="page-card">
+<h3>/ (главная) ⚠️ title пустой</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old"><span class="missing">⚠️ Не найден / пустой</span></div>
+  <div class="row-new">Оил Ресурс — оптовые поставки нефти и нефтепродуктов — Трейдинг</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">ООО «Оил Ресурс»: оптовые поставки дизеля, бензина, мазута, СУГ. 14 НПЗ-партнёров, 520 тыс. тонн/год. Рейтинг BBB||ru. → Заявка</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Мы создаём устойчивое будущее</div>
+  <div class="row-new">Оил Ресурс — трейдинг и логистика нефтепродуктов</div>
+</div>
+</div>
+
+<div class="page-card">
+<h3>/about-company/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old"><span class="missing">⚠️ Не найден</span></div>
+  <div class="row-new">О компании Оил Ресурс — нефтяная компания с 2012 года</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">Оил Ресурс — трейдинг нефтепродуктов с 2012 г. Геология, бурение, добыча, переработка, нефтехимия. Выручка +67% г/г.</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Российская нефтяная компания «Оил Ресурс»</div>
+  <div class="row-new" style="color:var(--cyan)">✅ Оставить как есть</div>
+</div>
+</div>
+
+<div class="page-card">
+<h3>/business-directions/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old"><span class="missing">⚠️ Не найден</span></div>
+  <div class="row-new">Трейдинг нефтепродуктов — Оил Ресурс — Оптовые поставки</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">Оптовые поставки нефтепродуктов от Оил Ресурс: дизель, бензин, мазут, СУГ, керосин. 14 НПЗ, по всей России. → Заявка</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Основные направления</div>
+  <div class="row-new">Оптовые поставки нефтепродуктов — направления Оил Ресурс</div>
+</div>
+</div>
+
+<div class="page-card">
+<h3>/investors/esg/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">ESG-принципы в «Оил Ресурс» - устойчивость и технологическое лидерство</div>
+  <div class="row-new">ESG-стратегия — Оил Ресурс — Устойчивое развитие</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">ESG-стратегия компании Оил Ресурс: экология, социальная ответственность, корпоративное управление. Отчётность.</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">ESG</div>
+  <div class="row-new">ESG и устойчивое развитие «Оил Ресурс»</div>
+</div>
+</div>
+
+<div class="page-card">
+<h3>/press-center/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old">Пресс-центр. Новости и события компании "Оил Ресурс"</div>
+  <div class="row-new">Пресс-центр Оил Ресурс — новости и пресс-релизы</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">Последние новости Оил Ресурс: пресс-релизы, облигации, рыночные обзоры. 100+ публикаций, СМИ. Подписаться →</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Пресс-центр</div>
+  <div class="row-new">Новости компании «Оил Ресурс»</div>
+</div>
+</div>
+
+<div class="page-card">
+<h3>/contacts/</h3>
+<div class="row">
+  <div class="row-label">Title</div>
+  <div class="row-old"><span class="missing">⚠️ Не найден</span></div>
+  <div class="row-new">Контакты Оил Ресурс — Москва, Калуга, Башкортостан</div>
+</div>
+<div class="row">
+  <div class="row-label">Description</div>
+  <div class="row-old"><span class="missing">❌ Отсутствует</span></div>
+  <div class="row-new">3 офиса: Москва (ул. Тимура Фрунзе), Кондрово (Калуга), Башкортостан. Телефон, email, реквизиты. → Написать нам</div>
+</div>
+<div class="row">
+  <div class="row-label">H1</div>
+  <div class="row-old">Контакты</div>
+  <div class="row-new">Контакты компании «Оил Ресурс»</div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ГК «Кириллица»",
+  "legalName": "АО «Кириллица»",
+  "url": "https://kirillitsa.ru",
+  "logo": "https://kirillitsa.ru/local/templates/kirilitsa/images/logo.svg",
+  "description": "Независимая группа компаний. Инвестиции в нефтегазовую промышленность, АПК, IT.",
+  "foundingDate": "2014",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Москва",
+    "addressRegion": "Москва",
+    "postalCode": "123112",
+    "streetAddress": "Пресненская наб., 12, Башня Федерация",
+    "addressCountry": "RU"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "8-800-600-29-44",
+    "contactType": "general"
+  },
+  "sameAs": [
+    "https://t.me/kirillitsa",
+    "https://max.ru/id4004021785_biz",
+    "https://vk.com/gk_kirillitsa"
+  ],
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "value": "TODO"
+  }
+}
